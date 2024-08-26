@@ -5,7 +5,8 @@ import { demoProfilePicture } from "../utils/constants";
 
 
 export default function ChannelCard({
-    channelDetail
+    channelDetail,
+    marginTop
 }) {
 
     return (
@@ -18,10 +19,11 @@ export default function ChannelCard({
                 alignItems: 'center',
                 width: { xs: '356px', md: '320 px' },
                 height: '326px',
-                margin: 'auto'
+                margin: 'auto',
+                marginTop
             }}
         >
-            <Link to={`/channel${channelDetail?.id?.channelId}`}>
+            <Link to={`/channel/${channelDetail?.id?.channelId}`}>
                 <CardContent
                     sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'conter', textAlign: 'center', color: '#fff' }}
                 >
