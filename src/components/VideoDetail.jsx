@@ -4,17 +4,21 @@ import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Typography, Box, Stack } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
-import { Video } from './';
+import { Videos } from './';
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 export default function VideoDetail() {
     const [videoDetail, setVideoDetail] = useState(null);
+    const [videos, setVideos] = useState(null);
     const { id } = useParams();
 
     useEffect(() => {
         (async () => {
             const video = await fetchFromAPI(`videos?part=snippet,statistics&id=${id}`);
             setVideoDetail(video.items[0]);
+
+            const similarVideos = await fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`);
+            setVideos(similarVideos.items);
 
         })();
     }, [id]);
@@ -58,6 +62,11 @@ export default function VideoDetail() {
                             </Stack>
                         </Stack>
                     </Box>
+                </Box>
+
+                <Box px={2} py={{ md: 1, xs: 5 }} justifyContent='center' alignItems='center'>
+                    <Videos videos={videos} direction='column' />
+
                 </Box>
             </Stack>
         </Box>
